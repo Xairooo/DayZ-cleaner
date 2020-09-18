@@ -22,24 +22,10 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
     <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>14643CB59ADA46BC7A25708E0D916749D95E42E8</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>DayZ cleaner_TemporaryKey.pfx</ManifestKeyFile>
     <StartupObject>DayZ_cleaner.Program</StartupObject>
-    <PackageProjectUrl>http://www.ZombieToast.de</PackageProjectUrl>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>DayZ cleaner.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
