@@ -39,6 +39,7 @@
             // 
             // okButton
             // 
+            this.okButton.Enabled = false;
             this.okButton.Location = new System.Drawing.Point(256, 187);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(100, 23);
@@ -87,8 +88,10 @@
             this.ResultTextBox.ReadOnly = true;
             this.ResultTextBox.Size = new System.Drawing.Size(206, 13);
             this.ResultTextBox.TabIndex = 5;
+            this.ResultTextBox.Text = "Searching... Please wait.";
+            this.ResultTextBox.TextChanged += new System.EventHandler(this.ResultTextBox_TextChanged);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -105,7 +108,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "DayZ cleaner";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DiscordPictureBox)).EndInit();

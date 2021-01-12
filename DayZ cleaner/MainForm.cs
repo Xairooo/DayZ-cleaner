@@ -14,12 +14,13 @@ namespace DayZ_cleaner
             InitializeComponent();
         }
 
-        private static readonly List<string> fileExts = new List<string> {"mdmp", "rpt", "log"};
+        private static readonly List<string> fileExts = new List<string> {"mdmp", "rpt", "log", "ch"};
         private readonly List<string> files = new List<string>();
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            findFiles();
+            //findFiles();
+            Task.Run(() => findFiles());
         }
 
         private void okButton_Click(object sender, EventArgs e) => deleteFiles();
@@ -27,18 +28,20 @@ namespace DayZ_cleaner
 
         private async Task deleteFiles()
         {
+            var cleanedCounter = 0;
             foreach (var file in files)
             {
                 try
                 {
                     new FileInfo(file).Delete();
+                    cleanedCounter++;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
                 }
             }
-
+            MessageBox.Show($"cleaned {cleanedCounter} / {files.Count}");
             Application.Exit();
         }
 
@@ -47,12 +50,21 @@ namespace DayZ_cleaner
             var path = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\DayZ\\";
 
             long fileSize = 0;
+            var fileCount = 0;
 
-            foreach (var fileExt in fileExts) files.AddRange(Directory.GetFiles(path, $"*.{fileExt}"));
-            foreach (var file in files) fileSize += new FileInfo(file).Length;
+            foreach (var fileExt in fileExts)
+            {
+                files.AddRange(Directory.GetFiles(path, $"*.{fileExt}", SearchOption.AllDirectories));
+            }
 
+            foreach (var file in files)
+            {
+                fileSize += new FileInfo(file).Length;
+                fileCount++;
+                ResultTextBox.Invoke((MethodInvoker)delegate { ResultTextBox.Text = $"Found {fileCount} files with a size of {BytesToPrettyString(fileSize)}."; });
+            }
             await Task.Delay(1);
-            ResultTextBox.Text = $"Found {files.Count} files with a size of {BytesToPrettyString(fileSize)}.";
+            okButton.Invoke((MethodInvoker)delegate { okButton.Enabled = true; });            
         }
 
         public static string BytesToPrettyString(float Size) => ConvertBytesToPrettyString(Size, 0);
@@ -88,6 +100,11 @@ namespace DayZ_cleaner
         private void DiscordPictureBox_Click(object sender, EventArgs e)
         {
             Process.Start("https://discord.gg/hYnRxtC");
+        }
+
+        private void ResultTextBox_TextChanged(object sender, EventArgs e)
+        {
+            this.ResultTextBox.Refresh();
         }
     }
 }
